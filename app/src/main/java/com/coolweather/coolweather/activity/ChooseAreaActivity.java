@@ -70,6 +70,7 @@ public class ChooseAreaActivity extends Activity {
             Intent intent = new Intent(this, WeatherActivity.class);
             startActivity(intent);
             finish();
+            return;
         }
         setContentView(R.layout.activity_choose_area);
 

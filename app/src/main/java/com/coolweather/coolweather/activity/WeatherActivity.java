@@ -100,8 +100,10 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
     * 查询天气代号对应的天气
     * */
     private void queryWeatherInfo(String weatherCode){
-        String address = Prams.QUERY_WEATHER + weatherCode + Prams.HTML;
+//        String address = Prams.QUERY_WEATHER + weatherCode + Prams.HTML;
+        String address = "http://api.weatherdt.com/common/?area=101010100&type=forecast[1h_2d{001,002,003,004}]&key=f2d4cfcd6e6a0267f7772524fa193f1b";
         queryFromServer(address, "weatherCode");
+
     }
 
     /*
@@ -170,6 +172,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
                 Intent intent = new Intent(this, ChooseAreaActivity.class);
                 intent.putExtra("from_weather_activity", true);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.refresh_weather:
                 publishText.setText("同步中...");
