@@ -22,6 +22,9 @@
 
         <service android:name=".service.AutoUpdateService"/>
         <receiver android:name=".receiver.AutoUpdateReceiver"/>
+
+        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.AreaManagerActivity"/>
     </application>
 
 </manifest>

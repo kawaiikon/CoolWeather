@@ -3,5 +3,16 @@
 
     <color name="title_background">#484E61</color>
     <color name="theme_background">#27A5F9</color>
-    <color name="white">#fff</color>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="blue">#354fdf</color>
+    <color name="white">#ffffff</color>
+    <color name="white_translucent">#7effffff</color>
+    <color name="black">#000000</color>
+    <color name="black_translucent">#46000000</color>
+    <color name="gray_translucent">#99aaaaaa</color>
+    <color name="gray">#aaaaaa</color>
 </resources>

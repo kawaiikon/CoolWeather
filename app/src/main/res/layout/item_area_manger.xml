@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blue">
+
+    <ImageView
+        android:id="@+id/delete_img"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/delete"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10:56"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:includeFontPadding="false"
+        android:layout_toEndOf="@id/delete_img"/>
+
+    <ImageView
+        android:id="@+id/ding_wei_image"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_toEndOf="@id/time_text"
+        android:layout_alignTop="@id/time_text"
+        android:layout_marginStart="5dp"
+        android:src="@drawable/ding_wei"/>
+
+    <TextView
+        android:id="@+id/city_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="杭州"
+        android:textSize="40sp"
+        android:textColor="@color/white"
+        android:layout_below="@id/time_text"
+        android:layout_alignStart="@id/time_text" />
+
+    <TextView
+        android:id="@+id/wen_du_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="88sp"
+        android:textColor="@color/white"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:text="28°"
+        android:includeFontPadding="false"/>
+
+    <View
+        android:layout_below="@id/wen_du_text"
+        style="@style/white_long_line"/>
+
+</RelativeLayout>

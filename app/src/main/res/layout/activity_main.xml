@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue">
+
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black">
+
+        <ImageView
+            android:id="@+id/menu_img"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:layout_centerVertical="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/menu" />
+
+        <TextView
+            android:id="@+id/city_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="杭州"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/city_text"
+            android:layout_centerHorizontal="true"
+            android:text="09:20 发布"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <com.weatherui.View.CircleView
+            android:id="@+id/circle_view"
+            android:layout_width="wrap_content"
+            android:layout_height="6dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/time_text"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"/>
+
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#000000"
+        android:flipInterval="30"
+        android:persistentDrawingCache="animation"
+        android:layout_below="@id/title_layout"/>
+
+</RelativeLayout>

@@ -29,12 +29,14 @@ public class AutoUpdateService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                updateWeather();
-            }
-        }).start();
+        if (intent.getBooleanExtra("is_first", false)) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    updateWeather();
+                }
+            }).start();
+        }
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         int anHour = 8 * 60 * 60 * 1000;//8小时的毫秒数
         long triggerAtTime = SystemClock.elapsedRealtime() + anHour;
