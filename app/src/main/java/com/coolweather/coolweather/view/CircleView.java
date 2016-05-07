@@ -21,12 +21,13 @@ public class CircleView extends LinearLayout {
     public CircleView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        mPages = 5;
-        init(mPages);
     }
 
-    private void init(final int pages) {
+    public void init(final int pages, int currentPage) {
+        mPages = pages;
+        mCurrentPage = currentPage;
         this.setOrientation(HORIZONTAL);
+        removeAllViews();
         ViewTreeObserver vto = getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -38,9 +39,8 @@ public class CircleView extends LinearLayout {
                         height, ViewGroup.LayoutParams.MATCH_PARENT);
                 if (pages > 0) {
                     //第一个点
-                    mCurrentPage = 1;
                     imageView = new ImageView(mContext);
-                    imageView.setImageResource(R.drawable.white_circle);
+                    imageView.setImageResource(R.drawable.gray_circle);
                     addView(imageView, image_params);
                     //后面的点
                     for (int i = 0; i < pages - 1; i++) {
@@ -49,7 +49,9 @@ public class CircleView extends LinearLayout {
                         image_params.setMarginStart(height / 2);
                         addView(imageView, image_params);
                     }
-
+                    setCurrentPage(mCurrentPage);
+                }else {
+                    Toast.makeText(mContext, "总页数不能小于零", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -60,11 +62,14 @@ public class CircleView extends LinearLayout {
             Toast.makeText(mContext, "当前页不能大于总页数", Toast.LENGTH_SHORT).show();
         } else {
             ImageView imageView;
+            //init和setCurrentPage方法分开执行时可能会出现imageView为空
             imageView = (ImageView) this.getChildAt(currentPage - 1);
             imageView.setImageResource(R.drawable.white_circle);
-            imageView = (ImageView) this.getChildAt(mCurrentPage - 1);
-            imageView.setImageResource(R.drawable.gray_circle);
-            mCurrentPage = currentPage;
+            if (currentPage != mCurrentPage) {
+                imageView = (ImageView) this.getChildAt(mCurrentPage - 1);
+                imageView.setImageResource(R.drawable.gray_circle);
+                mCurrentPage = currentPage;
+            }
         }
     }
 

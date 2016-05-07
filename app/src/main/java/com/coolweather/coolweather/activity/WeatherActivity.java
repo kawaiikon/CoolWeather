@@ -63,6 +63,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
+//        Log.e("onCreate", "onCreate................");
         //初始化各控件
         weatherInfoLayout = (LinearLayout) findViewById(R.id.weather_info_layout);
         cityNameText = (TextView) findViewById(R.id.city_name);

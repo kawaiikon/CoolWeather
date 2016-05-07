@@ -1,14 +1,18 @@
 package com.coolweather.coolweather.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.coolweather.coolweather.R;
+import com.coolweather.coolweather.activity.MainActivity;
 import com.coolweather.coolweather.model.AddedCity;
 
 import java.util.List;
@@ -37,25 +41,38 @@ public class AreaMangerAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ViewHolder viewHolder = (ViewHolder) holder;
+        final ViewHolder viewHolder = (ViewHolder) holder;
         AddedCity addedCity = mList.get(viewHolder.getLayoutPosition());
+        viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra("position", viewHolder.getLayoutPosition());
+                ((Activity) mContext).setResult(Activity.RESULT_OK, intent);
+                ((Activity) mContext).finish();
+                ((Activity) mContext).overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+            }
+        });
         viewHolder.timeText.setText(addedCity.getTime());
         viewHolder.cityText.setText(addedCity.getName());
         viewHolder.wenDuText.setText(addedCity.getWenDu());
         if (addedCity.getDdingWei()) {
             viewHolder.dingWeiImage.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             viewHolder.dingWeiImage.setVisibility(View.GONE);
         }
-        if (mIsEdit){
+        if (mIsEdit) {
+            viewHolder.relativeLayout.setEnabled(false);
             viewHolder.deleteImg.setVisibility(View.VISIBLE);
             viewHolder.deleteImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    mList.remove(viewHolder.getLayoutPosition());
+                    notifyDataSetChanged();
                 }
             });
-        }else {
+        } else {
+            viewHolder.relativeLayout.setEnabled(true);
             viewHolder.deleteImg.setVisibility(View.GONE);
         }
     }
@@ -65,12 +82,14 @@ public class AreaMangerAdapter extends RecyclerView.Adapter {
         return mList.size();
     }
 
-    public void isEdit(Boolean isEdit){
+    public void isEdit(Boolean isEdit) {
         mIsEdit = isEdit;
         notifyDataSetChanged();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.item_area_manger_layout)
+        RelativeLayout relativeLayout;
         @Bind(R.id.time_text)
         TextView timeText;
         @Bind(R.id.ding_wei_image)
@@ -86,5 +105,10 @@ public class AreaMangerAdapter extends RecyclerView.Adapter {
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public void setList(List<AddedCity> list) {
+        mList = list;
+        notifyDataSetChanged();
     }
 }

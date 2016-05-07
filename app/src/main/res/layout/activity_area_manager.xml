@@ -2,36 +2,47 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray">
+    android:background="@color/theme_background">
 
-    <TextView
-        android:id="@+id/add_city_text"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:text="添加"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:paddingTop="6dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"/>
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/title_background">
 
-    <TextView
-        android:id="@+id/edit_city_text"
-        android:layout_width="70dp"
-        android:layout_height="40dp"
-        android:text="编辑"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:paddingTop="6dp"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp"
-        android:layout_alignParentEnd="true"/>
+        <TextView
+            android:id="@+id/add_city_text"
+            android:layout_width="70dp"
+            android:layout_height="48dp"
+            android:background="@drawable/selector_black"
+            android:paddingBottom="6dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="6dp"
+            android:text="添加"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/edit_city_text"
+            android:layout_width="70dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/selector_black"
+            android:paddingBottom="6dp"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="6dp"
+            android:text="编辑"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/city_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/edit_city_text"
-        android:layout_marginTop="8dp"/>
+        android:layout_below="@id/title_layout" />
 
 </RelativeLayout>

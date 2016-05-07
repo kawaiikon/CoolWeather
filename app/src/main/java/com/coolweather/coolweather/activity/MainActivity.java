@@ -1,8 +1,10 @@
 package com.coolweather.coolweather.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +12,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.coolweather.coolweather.CommonRes;
 import com.coolweather.coolweather.R;
-import com.coolweather.coolweather.view.CircleView;
 import com.coolweather.coolweather.adapter.WeatherFragmentPagerAdapter;
 import com.coolweather.coolweather.fragment.WeatherFragment;
 import com.coolweather.coolweather.model.AddedCity;
+import com.coolweather.coolweather.util.Utility;
+import com.coolweather.coolweather.view.CircleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +26,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Bind(R.id.viewpager)
     ViewPager mViewPager;
@@ -36,50 +40,60 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView mTimeText;
 
     private List<AddedCity> mList = new ArrayList<>();
+    private Boolean isDelete = false;//判断是不是删除了城市
+
+    //删除城市时刷新
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            isDelete = true;
+            init();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        AddedCity addedCity = new AddedCity();
-        addedCity.setName("杭州");
-        addedCity.setTime("15:35");
-        mList.add(addedCity);
-        addedCity = new AddedCity();
-        addedCity.setName("武汉");
-        addedCity.setTime("15:35");
-        mList.add(addedCity);
-        addedCity = new AddedCity();
-        addedCity.setName("上海");
-        addedCity.setTime("15:35");
-        mList.add(addedCity);
-        addedCity = new AddedCity();
-        addedCity.setName("江苏");
-        addedCity.setTime("15:35");
-        mList.add(addedCity);
-        addedCity = new AddedCity();
-        addedCity.setName("广州");
-        addedCity.setTime("15:35");
-        mList.add(addedCity);
 
-        WeatherFragment fragment1 = WeatherFragment.newInstance("杭州");
-        WeatherFragment fragment2 = WeatherFragment.newInstance("武汉");
-        WeatherFragment fragment3 = WeatherFragment.newInstance("上海");
-        WeatherFragment fragment4 = WeatherFragment.newInstance("江苏");
-        WeatherFragment fragment5 = WeatherFragment.newInstance("广州");
+        init();
+        //注册广播
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(CommonRes.DELETE_CITY_BROADRECAST);
+        registerReceiver(mReceiver, intentFilter);
+    }
+
+    private void init() {
+        ButterKnife.bind(this);
+        mList = Utility.loadAddedCity(this);
+        if (mList.size() == 0){
+            finish();
+        }else {
+            mCityText.setText(mList.get(0).getName());
+        }
 
         List<Fragment> list = new ArrayList<>();
-        list.add(fragment1);
-        list.add(fragment2);
-        list.add(fragment3);
-        list.add(fragment4);
-        list.add(fragment5);
+        for (AddedCity addedCity : mList) {
+            WeatherFragment fragment = WeatherFragment.newInstance(addedCity.getCountyCode());
+            list.add(fragment);
+        }
+
         WeatherFragmentPagerAdapter adapter = new WeatherFragmentPagerAdapter(getSupportFragmentManager(), list);
         mViewPager.setOffscreenPageLimit(list.size());
         mViewPager.setAdapter(adapter);
 
         mCircleView = (CircleView) findViewById(R.id.circle_view);
+
+        Boolean isFromChooseActivity = getIntent().getBooleanExtra("from_choose_activity", false);
+        //选择了一个新的城市并且不是删除后刷新显示最后一个城市
+        if (isFromChooseActivity && !isDelete) {
+            mCircleView.init(mList.size(), mList.size());
+            mViewPager.setCurrentItem(mList.size() - 1);
+            mCityText.setText(mList.get(mList.size() - 1).getName());
+        } else {
+            mCircleView.init(mList.size(), 1);
+            isDelete = false;
+        }
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -104,13 +118,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.menu_img:
                 Intent intent = new Intent(MainActivity.this, AreaManagerActivity.class);
-                intent.putParcelableArrayListExtra("added_city_list", (ArrayList<? extends Parcelable>) mList);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                if (data.hasExtra("position")) {
+                    mViewPager.setCurrentItem(data.getIntExtra("position", 1));
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mReceiver);
     }
 }

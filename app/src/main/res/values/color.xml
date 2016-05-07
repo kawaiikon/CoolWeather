@@ -2,17 +2,20 @@
 <resources>
 
     <color name="title_background">#484E61</color>
-    <color name="theme_background">#27A5F9</color>
+    <color name="selector_title_background">#3b4050</color>
+    <color name="theme_background">#ededed</color>
 
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="blue">#354fdf</color>
+    <color name="blue">#3F51B5</color>
+    <color name="selector_blue">#303F9F</color>
     <color name="white">#ffffff</color>
     <color name="white_translucent">#7effffff</color>
     <color name="black">#000000</color>
     <color name="black_translucent">#46000000</color>
     <color name="gray_translucent">#99aaaaaa</color>
     <color name="gray">#aaaaaa</color>
+    <color name="selector_gray">#989898</color>
 </resources>

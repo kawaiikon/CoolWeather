@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.coolweather.coolweather.R;
 import com.coolweather.coolweather.adapter.WeatherAdapter;
+import com.hongshi.pullToRefreshAndLoad.pullableview.PullableScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,12 @@ import java.util.List;
 public class WeatherFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private String city;
+    private String mCountyCode;
+    private PullableScrollView mPullableScrollView;
 
-    public static WeatherFragment newInstance(String city) {
+    public static WeatherFragment newInstance(String countyCode) {
         Bundle args = new Bundle();
-        args.putString("city", city);
+        args.putString("county_code", countyCode);
         WeatherFragment pageFragment = new WeatherFragment();
         pageFragment.setArguments(args);
         return pageFragment;
@@ -34,7 +36,7 @@ public class WeatherFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        city = getArguments().getString("city");
+        mCountyCode = getArguments().getString("county_code");
     }
 
     @Nullable
@@ -42,6 +44,8 @@ public class WeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weather, null);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        mPullableScrollView = (PullableScrollView) view.findViewById(R.id.pull_scroll_view);
+        mPullableScrollView.setCanPullUp(false);
 
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);

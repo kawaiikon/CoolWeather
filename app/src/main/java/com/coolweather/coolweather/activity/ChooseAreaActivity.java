@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.coolweather.coolweather.Prams;
 import com.coolweather.coolweather.R;
+import com.coolweather.coolweather.model.AddedCity;
 import com.coolweather.coolweather.model.City;
 import com.coolweather.coolweather.model.CoolWeatherDB;
 import com.coolweather.coolweather.model.County;
@@ -60,19 +61,33 @@ public class ChooseAreaActivity extends Activity {
     //是否从WeatherActivity中跳转过来的
     private boolean isFromWeatherActivity;
 
+    private SharedPreferences preferences;
+    private List<AddedCity> mList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_choose_area);
         isFromWeatherActivity = getIntent().getBooleanExtra("from_weather_activity", false);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (preferences.getBoolean("city_selected", false) && !isFromWeatherActivity){
-            Intent intent = new Intent(this, WeatherActivity.class);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        if (preferences.getBoolean("city_selected", false) && !isFromWeatherActivity) {
+//            Intent intent = new Intent(this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//            return;
+//        }
+
+        //从本地读取已添加城市
+        mList = Utility.loadAddedCity(this);
+        //第二次打开直接显示天气界面
+        if (mList.size() > 0 && !isFromWeatherActivity){
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
             return;
         }
-        setContentView(R.layout.activity_choose_area);
 
         listView = (ListView) findViewById(R.id.list_view);
         titleText = (TextView) findViewById(R.id.title_text);
@@ -88,10 +103,18 @@ public class ChooseAreaActivity extends Activity {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
                     queryCounties();
-                }else if (currentLevel == LEVEL_COUNTY){
+                } else if (currentLevel == LEVEL_COUNTY) {
                     String countyCode = countyList.get(position).getCountyCode();
-                    Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
-                    intent.putExtra("county_code", countyCode);
+                    //把添加的城市存到本地
+                    AddedCity addedCity = new AddedCity();
+                    addedCity.setCountyCode(countyCode);
+                    addedCity.setName(countyList.get(position).getCountyName());
+                    addedCity.setId(countyList.get(position).getId());
+                    mList.add(addedCity);
+                    Utility.saveAddedCity(ChooseAreaActivity.this, mList);
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("from_choose_activity", true);
                     startActivity(intent);
                     finish();
                 }
@@ -174,24 +197,24 @@ public class ChooseAreaActivity extends Activity {
             public void onFinish(String response) {
                 LogUtil.e("response", response);
                 boolean result = false;
-                if ("province".equals(type)){
+                if ("province".equals(type)) {
                     result = Utility.handleProvincesResponse(coolWeatherDB, response);
-                }else if ("city".equals(type)){
+                } else if ("city".equals(type)) {
                     result = Utility.handleCitiesResponse(coolWeatherDB, response, selectedProvince.getId());
-                }else if ("county".equals(type)){
+                } else if ("county".equals(type)) {
                     result = Utility.handleCountiesResponse(coolWeatherDB, response, selectedCity.getId());
                 }
-                if (result){
+                if (result) {
                     //通过runOnUiThread()方法回到主线程里逻辑
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             closeProgressDialog();
-                            if ("province".equals(type)){
+                            if ("province".equals(type)) {
                                 queryProvinces();
-                            }else if ("city".equals(type)){
+                            } else if ("city".equals(type)) {
                                 queryCities();
-                            }else if ("county".equals(type)){
+                            } else if ("county".equals(type)) {
                                 queryCounties();
                             }
                         }
