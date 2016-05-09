@@ -1,6 +1,5 @@
 package com.coolweather.coolweather.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,7 +21,7 @@ import com.coolweather.coolweather.util.Utility;
 /**
  * Created on 2016/4/4.
  */
-public class WeatherActivity extends Activity implements View.OnClickListener{
+public class WeatherActivity extends BaseActivity implements View.OnClickListener{
 
     private LinearLayout weatherInfoLayout;
     /*
@@ -63,7 +62,6 @@ public class WeatherActivity extends Activity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-//        Log.e("onCreate", "onCreate................");
         //初始化各控件
         weatherInfoLayout = (LinearLayout) findViewById(R.id.weather_info_layout);
         cityNameText = (TextView) findViewById(R.id.city_name);

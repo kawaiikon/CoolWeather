@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -157,6 +158,27 @@ public class Utility {
             return new Gson().fromJson(preferences.getString(CommonRes.ADDED_CITY_LIST, ""), listType);
         } else {
             return new ArrayList<>();
+        }
+    }
+
+    /**
+     * 用于判断时间差是否大于1小时
+     * @param calendar1 Calender 对象
+     * @param calendar2 Calender 对象
+     * @return true 时间差大于1小时
+     */
+    public static Boolean compare(Calendar calendar1, Calendar calendar2){
+        if (calendar1.get(Calendar.YEAR) != calendar2.get(Calendar.YEAR)) {
+            return true;
+        }else if (calendar1.get(Calendar.MONTH) != calendar2.get(Calendar.MONTH)){
+            return true;
+        } else if (calendar1.get(Calendar.DAY_OF_MONTH) != calendar2.get(Calendar.DAY_OF_MONTH)){
+            return true;
+        }else if ((calendar1.get(Calendar.HOUR) - calendar2.get(Calendar.HOUR)) >= 1 ||
+                (calendar1.get(Calendar.HOUR) - calendar2.get(Calendar.HOUR)) <= -1){
+            return true;
+        }else {
+            return false;
         }
     }
 }

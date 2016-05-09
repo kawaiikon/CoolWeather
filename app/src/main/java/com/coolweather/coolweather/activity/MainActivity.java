@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.viewpager)
     ViewPager mViewPager;
@@ -63,11 +62,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         registerReceiver(mReceiver, intentFilter);
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        init();
+    }
+
     private void init() {
         ButterKnife.bind(this);
         mList = Utility.loadAddedCity(this);
         if (mList.size() == 0){
             finish();
+            return;
         }else {
             mCityText.setText(mList.get(0).getName());
         }

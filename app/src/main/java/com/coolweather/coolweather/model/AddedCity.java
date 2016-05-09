@@ -10,7 +10,7 @@ public class AddedCity {
     private String time;
     private String wenDu = "--°";
     private String countyCode;
-    private Boolean isDdingWei = false;//是不是定位的城市
+    private Boolean isDingWei = false;//是不是定位的城市
 
     public AddedCity() {
     }
@@ -48,11 +48,11 @@ public class AddedCity {
     }
 
     public Boolean getDdingWei() {
-        return isDdingWei;
+        return isDingWei;
     }
 
     public void setDdingWei(Boolean ddingWei) {
-        isDdingWei = ddingWei;
+        isDingWei = ddingWei;
     }
 
     public String getCountyCode() {
@@ -63,38 +63,4 @@ public class AddedCity {
         this.countyCode = countyCode;
     }
 
-//    @Override
-//    public int describeContents() {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        Bundle bundle = new Bundle();
-//        bundle.putInt("id", id);
-//        bundle.putString("name", name);
-//        bundle.putString("time", time);
-//        bundle.putString("wen_du", wenDu);
-//        bundle.putBoolean("is_ding_wei", isDdingWei);
-//        dest.writeBundle(bundle);
-//    }
-//
-//    public static final Creator<AddedCity> CREATOR = new Creator<AddedCity>() {
-//        public AddedCity createFromParcel(Parcel in) {
-//            return new AddedCity(in);
-//        }
-//
-//        public AddedCity[] newArray(int size) {
-//            return new AddedCity[size];
-//        }
-//    };
-//
-//    private AddedCity(Parcel in) {
-//        Bundle bundle = in.readBundle();
-//        id = bundle.getInt("id");
-//        name = bundle.getString("name");
-//        time = bundle.getString("time");
-//        wenDu = bundle.getString("wen_du");
-//        isDdingWei = bundle.getBoolean("is_ding_wei");
-//    }
 }

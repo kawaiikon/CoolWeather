@@ -1,6 +1,5 @@
 package com.coolweather.coolweather.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +19,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AreaManagerActivity extends Activity implements View.OnClickListener {
+public class AreaManagerActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.add_city_text)
     TextView mAddCityText;
@@ -48,6 +47,13 @@ public class AreaManagerActivity extends Activity implements View.OnClickListene
 
         mAddCityText.setOnClickListener(this);
         mEditCityText.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mList = Utility.loadAddedCity(this);
+        areaMangerAdapter.notifyDataSetChanged();
     }
 
     @Override

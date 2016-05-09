@@ -25,6 +25,7 @@ import com.coolweather.coolweather.model.Province;
 import com.coolweather.coolweather.util.HttpCallbackListener;
 import com.coolweather.coolweather.util.HttpUtil;
 import com.coolweather.coolweather.util.LogUtil;
+import com.coolweather.coolweather.util.MyActivityManager;
 import com.coolweather.coolweather.util.Utility;
 
 import java.util.ArrayList;
@@ -69,6 +70,7 @@ public class ChooseAreaActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_choose_area);
+//        MyActivityManager.finishAllActivity();
         isFromWeatherActivity = getIntent().getBooleanExtra("from_weather_activity", false);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -104,6 +106,7 @@ public class ChooseAreaActivity extends Activity {
                     selectedCity = cityList.get(position);
                     queryCounties();
                 } else if (currentLevel == LEVEL_COUNTY) {
+                    MyActivityManager.finishAllActivity();
                     String countyCode = countyList.get(position).getCountyCode();
                     //把添加的城市存到本地
                     AddedCity addedCity = new AddedCity();

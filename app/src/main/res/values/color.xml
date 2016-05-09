@@ -9,8 +9,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="blue">#3F51B5</color>
-    <color name="selector_blue">#303F9F</color>
+    <color name="blue">#3f96b5</color>
+    <color name="selector_blue">#3886a2</color>
     <color name="white">#ffffff</color>
     <color name="white_translucent">#7effffff</color>
     <color name="black">#000000</color>

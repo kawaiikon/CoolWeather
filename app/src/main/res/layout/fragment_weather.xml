@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <com.hongshi.pullToRefreshAndLoad.View.PullToRefreshLayout
-        android:id="@+id/history_pull_layout"
+        android:id="@+id/pull_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -21,7 +21,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
+                <!--当前温度-->
                 <TextView
                     android:id="@+id/wen_du_text"
                     android:layout_width="wrap_content"
@@ -31,7 +31,6 @@
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="20dp"
                     android:includeFontPadding="true"
-                    android:text="25°"
                     android:textColor="@color/white"
                     android:textSize="120sp" />
 
@@ -43,6 +42,7 @@
                     android:layout_below="@id/wen_du_text"
                     android:src="@drawable/duo_yun" />
 
+                <!--天气信息 例：多云  16~29℃-->
                 <TextView
                     android:id="@+id/weather_text"
                     android:layout_width="wrap_content"
@@ -51,7 +51,6 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/weather_img"
                     android:includeFontPadding="false"
-                    android:text="多云  16~29℃"
                     android:textColor="@color/white"
                     android:textSize="25sp" />
 
@@ -69,13 +68,13 @@
                         android:layout_height="20dp"
                         android:src="@drawable/wen_du" />
 
+                    <!--体感温度 例：体感 24℃-->
                     <TextView
                         android:id="@+id/ti_gan_wen_du_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="2dp"
                         android:includeFontPadding="false"
-                        android:text="体感 24℃"
                         android:textColor="@color/white" />
 
                     <ImageView
@@ -492,480 +491,5 @@
         <include layout="@layout/load_more" />
 
     </com.hongshi.pullToRefreshAndLoad.View.PullToRefreshLayout>
-
-    <!--<ScrollView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:scrollbars="none">-->
-
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/wen_du_text"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_marginLeft="25dp"-->
-    <!--android:layout_marginTop="20dp"-->
-    <!--android:includeFontPadding="true"-->
-    <!--android:text="25°"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="120sp" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/weather_img"-->
-    <!--android:layout_width="30dp"-->
-    <!--android:layout_height="30dp"-->
-    <!--android:layout_alignLeft="@id/wen_du_text"-->
-    <!--android:layout_below="@id/wen_du_text"-->
-    <!--android:src="@drawable/duo_yun" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/weather_text"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignTop="@id/weather_img"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_toRightOf="@id/weather_img"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:text="多云  16~29℃"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="25sp" />-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@id/weather_img"-->
-    <!--android:layout_marginLeft="27dp"-->
-    <!--android:layout_marginTop="6dp"-->
-    <!--android:gravity="center_vertical">-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/wen_du_img"-->
-    <!--android:layout_width="20dp"-->
-    <!--android:layout_height="20dp"-->
-    <!--android:src="@drawable/wen_du" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/ti_gan_wen_du_text"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="2dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:text="体感 24℃"-->
-    <!--android:textColor="@color/white" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/leaf_img"-->
-    <!--android:layout_width="20dp"-->
-    <!--android:layout_height="20dp"-->
-    <!--android:layout_marginLeft="8dp"-->
-    <!--android:src="@drawable/leaf" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/leaf_text"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="4dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:text="良"-->
-    <!--android:textColor="@color/white" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--<View-->
-    <!--android:id="@+id/white_long_line"-->
-    <!--style="@style/white_long_line"-->
-    <!--android:layout_marginTop="400dp" />-->
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/weather_layout"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@id/white_long_line"-->
-    <!--android:layout_marginLeft="28dp"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:gravity="center_horizontal"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="明天"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="18sp" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/wen_du_text_1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="3dp"-->
-    <!--android:text="22/29℃"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="18sp" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/weather_img_1"-->
-    <!--android:layout_width="30dp"-->
-    <!--android:layout_height="30dp"-->
-    <!--android:layout_marginTop="3dp"-->
-    <!--android:src="@drawable/xiao_yu" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/weather_text_1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="3dp"-->
-    <!--android:text="小雨"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="18sp" />-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@id/white_long_line"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:layout_marginLeft="28dp"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:gravity="center_horizontal"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="后天"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="18sp" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/wen_du_text_2"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="3dp"-->
-    <!--android:text="21/28℃"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="18sp" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/weather_img_2"-->
-    <!--android:layout_width="30dp"-->
-    <!--android:layout_height="30dp"-->
-    <!--android:layout_marginTop="3dp"-->
-    <!--android:src="@drawable/zhong_yu" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/weather_text_2"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="3dp"-->
-    <!--android:text="雨"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="18sp" />-->
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_below="@id/white_long_line"-->
-    <!--android:layout_marginRight="28dp"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:gravity="center_horizontal"-->
-    <!--android:orientation="vertical">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="周六"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="18sp" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/wen_du_text_3"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="3dp"-->
-    <!--android:text="21/30℃"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="18sp" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/weather_img_3"-->
-    <!--android:layout_width="30dp"-->
-    <!--android:layout_height="30dp"-->
-    <!--android:layout_marginTop="3dp"-->
-    <!--android:src="@drawable/sun" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/weather_text_3"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="3dp"-->
-    <!--android:text="晴"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="18sp" />-->
-    <!--</LinearLayout>-->
-
-    <!--<View-->
-    <!--android:id="@+id/white_long_line_2"-->
-    <!--style="@style/white_long_line"-->
-    <!--android:layout_below="@id/weather_layout"-->
-    <!--android:layout_marginTop="5dp" />-->
-
-    <!--<android.support.v7.widget.RecyclerView-->
-    <!--android:id="@+id/recycler_view"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="96dp"-->
-    <!--android:layout_below="@id/white_long_line_2"/>-->
-
-    <!--<View-->
-    <!--android:id="@+id/white_long_line_3"-->
-    <!--style="@style/white_long_line"-->
-    <!--android:layout_below="@id/recycler_view" />-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_title_1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="日出:"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_below="@id/white_long_line_3"-->
-    <!--android:layout_marginTop="6dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_marginLeft="130dp"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_content_1"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="05:13"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_toRightOf="@id/table_title_1"-->
-    <!--android:layout_marginLeft="20dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignTop="@id/table_title_1"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_title_2"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="日落:"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_below="@id/table_title_1"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignRight="@id/table_title_1"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_content_2"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="18:38"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_toRightOf="@id/table_title_2"-->
-    <!--android:layout_marginLeft="20dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignTop="@id/table_title_2"/>-->
-
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_title_3"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="降雨概率:"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_below="@id/table_title_2"-->
-    <!--android:layout_marginTop="6dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignRight="@id/table_title_2"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_content_3"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="0%"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_toRightOf="@id/table_title_3"-->
-    <!--android:layout_marginLeft="20dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignTop="@id/table_title_3"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_title_4"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="湿度:"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_below="@id/table_title_3"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignRight="@id/table_title_3"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_content_4"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="28%"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_toRightOf="@id/table_title_4"-->
-    <!--android:layout_marginLeft="20dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignTop="@id/table_title_4"/>-->
-
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_title_5"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="风速:"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_below="@id/table_title_4"-->
-    <!--android:layout_marginTop="6dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignRight="@id/table_title_4"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_content_5"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="西南偏西 5米/秒"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_toRightOf="@id/table_title_5"-->
-    <!--android:layout_marginLeft="20dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignTop="@id/table_title_5"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_title_6"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="体感温度:"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_below="@id/table_title_5"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignRight="@id/table_title_5"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_content_6"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="27°"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_toRightOf="@id/table_title_6"-->
-    <!--android:layout_marginLeft="20dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignTop="@id/table_title_6"/>-->
-
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_title_7"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="降水量:"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_below="@id/table_title_6"-->
-    <!--android:layout_marginTop="6dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignRight="@id/table_title_6"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_content_7"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="2.4 厘米"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_toRightOf="@id/table_title_7"-->
-    <!--android:layout_marginLeft="20dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignTop="@id/table_title_7"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_title_8"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="气压"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_below="@id/table_title_7"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignRight="@id/table_title_7"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_content_8"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="1009 百帕"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_toRightOf="@id/table_title_8"-->
-    <!--android:layout_marginLeft="20dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignTop="@id/table_title_8"/>-->
-
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_title_9"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="能见度:"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_below="@id/table_title_8"-->
-    <!--android:layout_marginTop="6dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignRight="@id/table_title_8"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_content_9"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="10.0 公里"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_toRightOf="@id/table_title_9"-->
-    <!--android:layout_marginLeft="20dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignTop="@id/table_title_9"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_title_10"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="紫外线指数:"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_below="@id/table_title_9"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignRight="@id/table_title_9"/>-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/table_content_10"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="3"-->
-    <!--android:textSize="18sp"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:layout_toRightOf="@id/table_title_10"-->
-    <!--android:layout_marginLeft="20dp"-->
-    <!--android:includeFontPadding="false"-->
-    <!--android:layout_alignTop="@id/table_title_10"/>-->
-    <!--</RelativeLayout>-->
-    <!--</ScrollView>-->
 
 </LinearLayout>
