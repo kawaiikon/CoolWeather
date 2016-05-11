@@ -1,10 +1,18 @@
 package com.coolweather.coolweather.util;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
+import android.widget.RemoteViews;
 
 import com.coolweather.coolweather.CommonRes;
+import com.coolweather.coolweather.R;
+import com.coolweather.coolweather.activity.MainActivity;
 import com.coolweather.coolweather.model.AddedCity;
 import com.coolweather.coolweather.model.City;
 import com.coolweather.coolweather.model.CoolWeatherDB;
@@ -162,23 +170,57 @@ public class Utility {
     }
 
     /**
-     * 用于判断时间差是否大于1小时
+     * 用于判断时间差是否大于30秒
      * @param calendar1 Calender 对象
      * @param calendar2 Calender 对象
-     * @return true 时间差大于1小时
+     * @return true 时间差大于30秒
      */
     public static Boolean compare(Calendar calendar1, Calendar calendar2){
-        if (calendar1.get(Calendar.YEAR) != calendar2.get(Calendar.YEAR)) {
-            return true;
-        }else if (calendar1.get(Calendar.MONTH) != calendar2.get(Calendar.MONTH)){
-            return true;
-        } else if (calendar1.get(Calendar.DAY_OF_MONTH) != calendar2.get(Calendar.DAY_OF_MONTH)){
-            return true;
-        }else if ((calendar1.get(Calendar.HOUR) - calendar2.get(Calendar.HOUR)) >= 1 ||
-                (calendar1.get(Calendar.HOUR) - calendar2.get(Calendar.HOUR)) <= -1){
+        LogUtil.e("calender1", "" + calendar1.getTimeInMillis());
+        LogUtil.e("calender2", "" + calendar2.getTimeInMillis());
+        if (calendar1.getTimeInMillis() - calendar2.getTimeInMillis() >= 30000 ||
+                calendar1.getTimeInMillis() - calendar2.getTimeInMillis() <= -30000){
             return true;
         }else {
             return false;
         }
+    }
+
+    /**
+     * 发送天气notification
+     * @param context 上下文
+     * @param weatherImgRes 天气图标资源id
+     * @param currentTemp 当前气温
+     * @param temp 气温
+     * @param weather 天气
+     * @param city 城市
+     * @param sendTime 发布时间
+     */
+    public static void sendNotification(Context context, int weatherImgRes, String currentTemp, String temp,
+                                        String weather, String city, String sendTime){
+        RemoteViews contentViews = new RemoteViews(context.getPackageName(),
+                R.layout.notification_layout);
+        //通过控件的Id设置属性
+        contentViews.setImageViewResource(R.id.weather_img, weatherImgRes);
+        contentViews.setTextViewText(R.id.current_temp, currentTemp);
+        contentViews.setTextViewText(R.id.temp_text, temp);
+        contentViews.setTextViewText(R.id.weather_text, weather);
+        contentViews.setTextViewText(R.id.city_text, city);
+        contentViews.setTextViewText(R.id.send_time_text, sendTime);
+        Intent intent = new Intent(context,
+                MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                context, 0, intent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
+                context).setSmallIcon(weatherImgRes);
+        mBuilder.setAutoCancel(true);
+        mBuilder.setContentIntent(pendingIntent);
+        mBuilder.setContent(contentViews);
+        mBuilder.setAutoCancel(true);
+        Notification notification = mBuilder.build();
+        notification.flags = Notification.FLAG_ONGOING_EVENT;
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(10, notification);
     }
 }

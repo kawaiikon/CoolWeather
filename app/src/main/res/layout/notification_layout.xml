@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp">
+
+    <ImageView
+        android:id="@+id/weather_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/sun_1"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/current_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="27℃"
+        android:textSize="18sp"
+        android:layout_toEndOf="@id/weather_img"
+        android:layout_alignTop="@id/weather_img"
+        android:includeFontPadding="false"
+        android:layout_marginStart="10dp"/>
+
+    <TextView
+        android:id="@+id/temp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="11°/28°"
+        android:layout_toEndOf="@id/current_temp"
+        android:layout_alignTop="@id/current_temp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"/>
+
+    <TextView
+        android:id="@+id/weather_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="晴"
+        android:layout_alignStart="@id/current_temp"
+        android:textSize="18sp"
+        android:layout_below="@id/current_temp"
+        android:textColor="@color/black"
+        android:layout_marginTop="3dp"/>
+
+    <TextView
+        android:id="@+id/city_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="北京市"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_alignTop="@id/current_temp"
+        android:layout_marginEnd="10dp"/>
+
+    <TextView
+        android:id="@+id/send_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8:00发布"
+        android:textSize="16sp"
+        android:layout_alignTop="@id/weather_text"
+        android:layout_alignEnd="@id/city_text"/>
+</RelativeLayout>

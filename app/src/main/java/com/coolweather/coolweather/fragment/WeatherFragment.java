@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.coolweather.coolweather.Prams;
@@ -52,6 +53,10 @@ public class WeatherFragment extends Fragment {
     * 用于显示天气描述信息
     * */
     private TextView weatherDespText;
+    /**
+     * 天气图标
+     */
+    private ImageView weatherImg;
     /*
     * 用于显示当前气温
     * */
@@ -60,14 +65,21 @@ public class WeatherFragment extends Fragment {
     * 用于显示体感气温
     * */
     private TextView bodyTempText;
+    /**
+     * 第三天星期几
+     */
+    private TextView weekDayTxt;
 
     private Boolean isVisible = false;//判断Fragment数否显示
 
     private Calendar mLastRefreshTime;//上次刷新的时间戳
 
-    public static WeatherFragment newInstance(String countyCode) {
+    private int mPage;//第几页
+
+    public static WeatherFragment newInstance(String countyCode, int page) {
         Bundle args = new Bundle();
         args.putString("county_code", countyCode);
+        args.putInt("page", page);
         WeatherFragment pageFragment = new WeatherFragment();
         pageFragment.setArguments(args);
         return pageFragment;
@@ -77,6 +89,7 @@ public class WeatherFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mCountyCode = getArguments().getString("county_code");
+        mPage = getArguments().getInt("page");
     }
 
     @Nullable
@@ -91,13 +104,47 @@ public class WeatherFragment extends Fragment {
         weatherDespText = (TextView) view.findViewById(R.id.weather_text);
         currentTempText = (TextView) view.findViewById(R.id.wen_du_text);
         bodyTempText = (TextView) view.findViewById(R.id.ti_gan_wen_du_text);
+        weatherImg = (ImageView) view.findViewById(R.id.weather_img);
+        weekDayTxt = (TextView) view.findViewById(R.id.week_day_text_3);
 
         LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(manager);
+
+        Calendar calendar = Calendar.getInstance();
+
+        switch (calendar.get(Calendar.DAY_OF_WEEK)){
+            case 1:
+                weekDayTxt.setText("星期日");
+                break;
+            case 2:
+                weekDayTxt.setText("星期一");
+                break;
+            case 3:
+                weekDayTxt.setText("星期二");
+                break;
+            case 4:
+                weekDayTxt.setText("星期三");
+                break;
+            case 5:
+                weekDayTxt.setText("星期四");
+                break;
+            case 6:
+                weekDayTxt.setText("星期五");
+                break;
+            case 7:
+                weekDayTxt.setText("星期六");
+                break;
+        }
+
+        //展示12小时每小时天气
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            list.add("" + i);
+        for (int i = calendar.get(Calendar.HOUR); i < calendar.get(Calendar.HOUR) + 12; i++) {
+            if (i>=24) {
+                list.add("" + (i - 24));
+            } else {
+                list.add("" + i);
+            }
         }
         recyclerView.setAdapter(new WeatherAdapter(view.getContext(), list));
 
@@ -214,13 +261,27 @@ public class WeatherFragment extends Fragment {
     * */
     private void showWeather() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String temp1, temp2;
+        String temp1, temp2, weatherDesp;
         temp1 = preferences.getString("temp2", "").replaceAll("℃", "");
         temp2 = preferences.getString("temp1", "").replaceAll("℃", "");
-        currentTempText.setText(Integer.valueOf(temp1) + 1 + "°");
-        bodyTempText.setText("体感 " + (Integer.valueOf(temp1) + 1) + "℃");
-        weatherDespText.setText(preferences.getString("weather_desp", "") + " " + temp1 + "~" + temp2 + "℃");
+        weatherDesp = preferences.getString("weather_desp", "");
+        currentTempText.setText(Integer.valueOf(temp2) - 3 + "°");
+        bodyTempText.setText("体感 " + (Integer.valueOf(temp2) - 3) + "℃");
+        weatherDespText.setText(weatherDesp + " " + temp1 + "~" + temp2 + "℃");
         publishText.setText(preferences.getString("publish_time", "") + "发布");
+        int weatherImgRes = R.drawable.sun_1;
+        if (weatherDesp.contains("晴")){
+            weatherImgRes = R.drawable.sun_1;
+        } else if (weatherDesp.contains("阴")){
+            weatherImgRes = R.drawable.yin;
+        }else if (weatherDesp.contains("多云")){
+            weatherImgRes = R.drawable.duo_yun;
+        }else if (weatherDesp.contains("雨")){
+            weatherImgRes= R.drawable.yu;
+        } else if (weatherDesp.contains("雪")){
+            weatherImgRes = R.drawable.xue;
+        }
+        weatherImg.setImageResource(weatherImgRes);
         Intent intent = new Intent(getActivity(), AutoUpdateService.class);
         getActivity().startService(intent);
 
@@ -229,9 +290,14 @@ public class WeatherFragment extends Fragment {
         for (AddedCity addedCity : list){
             if (addedCity.getCountyCode().equals(mCountyCode)){
                 addedCity.setTime(preferences.getString("publish_time", ""));
-                addedCity.setWenDu(Integer.valueOf(temp1) + 1 + "°");
+                addedCity.setWenDu(Integer.valueOf(temp2) - 3 + "°");
             }
         }
         Utility.saveAddedCity(getActivity(), list);
+        if (mPage == 0){
+            Utility.sendNotification(getContext(), weatherImgRes, (Integer.valueOf(temp2) - 3) + "℃",
+                    temp1 + "~" + temp2 + "℃", weatherDesp, preferences.getString("city_name", ""),
+                    preferences.getString("publish_time", ""));
+        }
     }
 }

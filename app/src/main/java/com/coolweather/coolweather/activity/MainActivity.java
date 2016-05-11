@@ -71,6 +71,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void init() {
         ButterKnife.bind(this);
         mList = Utility.loadAddedCity(this);
+        //把所有添加城市都删了的话退出后，添加一个城市
         if (mList.size() == 0){
             finish();
             return;
@@ -79,8 +80,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 
         List<Fragment> list = new ArrayList<>();
-        for (AddedCity addedCity : mList) {
-            WeatherFragment fragment = WeatherFragment.newInstance(addedCity.getCountyCode());
+        for (int i = 0; i < mList.size(); i++) {
+            WeatherFragment fragment = WeatherFragment.newInstance(mList.get(i).getCountyCode(), i);
             list.add(fragment);
         }
 

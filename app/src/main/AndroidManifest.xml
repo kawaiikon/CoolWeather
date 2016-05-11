@@ -17,8 +17,6 @@
             </intent-filter>
         </activity>
         <!--显示天气信息界面-->
-        <activity android:name=".activity.WeatherActivity"
-            android:launchMode="singleTask"/>
 
         <service android:name=".service.AutoUpdateService"/>
         <receiver android:name=".receiver.AutoUpdateReceiver"/>
