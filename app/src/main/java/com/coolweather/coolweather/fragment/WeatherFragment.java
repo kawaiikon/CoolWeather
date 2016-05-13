@@ -115,31 +115,31 @@ public class WeatherFragment extends Fragment {
 
         switch (calendar.get(Calendar.DAY_OF_WEEK)){
             case 1:
-                weekDayTxt.setText("星期日");
-                break;
-            case 2:
-                weekDayTxt.setText("星期一");
-                break;
-            case 3:
                 weekDayTxt.setText("星期二");
                 break;
-            case 4:
+            case 2:
                 weekDayTxt.setText("星期三");
                 break;
-            case 5:
+            case 3:
                 weekDayTxt.setText("星期四");
                 break;
-            case 6:
+            case 4:
                 weekDayTxt.setText("星期五");
                 break;
-            case 7:
+            case 5:
                 weekDayTxt.setText("星期六");
+                break;
+            case 6:
+                weekDayTxt.setText("星期日");
+                break;
+            case 7:
+                weekDayTxt.setText("星期一");
                 break;
         }
 
         //展示12小时每小时天气
         List<String> list = new ArrayList<>();
-        for (int i = calendar.get(Calendar.HOUR); i < calendar.get(Calendar.HOUR) + 12; i++) {
+        for (int i = calendar.get(Calendar.HOUR_OF_DAY); i < calendar.get(Calendar.HOUR_OF_DAY) + 12; i++) {
             if (i>=24) {
                 list.add("" + (i - 24));
             } else {

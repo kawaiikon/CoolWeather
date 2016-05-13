@@ -37,9 +37,12 @@ import java.util.Locale;
  */
 public class Utility {
 
-    /*
-    * 解析和处理服务器返回的省级数据
-    * */
+    /**
+     * 解析和处理服务器返回的省级数据
+     * @param coolWeatherDB 把省级数据保存的数据库
+     * @param response 服务器返回的省级数据
+     * @return 解析是否成功
+     */
     public synchronized static boolean handleProvincesResponse(CoolWeatherDB coolWeatherDB, String response) {
         if (!response.isEmpty()) {
             String[] allProvince = response.split(",");
@@ -58,9 +61,13 @@ public class Utility {
         return false;
     }
 
-    /*
-    * 解析和处理服务器返回的市级数据
-    * */
+    /**
+     * 解析和处理服务器返回的市级数据
+     * @param coolWeatherDB 把市级数据保存的数据库
+     * @param response 服务器返回的市级数据
+     * @param provinceId 这个市对应的区的ID
+     * @return 解析是否成功
+     */
     public synchronized static boolean handleCitiesResponse(CoolWeatherDB coolWeatherDB, String response, int provinceId) {
         if (!response.isEmpty()) {
             String[] allCity = response.split(",");
@@ -80,9 +87,13 @@ public class Utility {
         return false;
     }
 
-    /*
-    * 解析和处理服务器返回的县级数据
-    * */
+    /**
+     * 解析和处理服务器返回的县级数据
+     * @param coolWeatherDB 把县级数据保存的数据库
+     * @param response 服务器返回的县级数据
+     * @param cityId 这个县对应的区的ID
+     * @return 解析是否成功
+     */
     public synchronized static boolean handleCountiesResponse(CoolWeatherDB coolWeatherDB, String response, int cityId) {
         if (!response.isEmpty()) {
             String[] allCounty = response.split(",");
@@ -102,9 +113,11 @@ public class Utility {
         return false;
     }
 
-    /*
-    * 解析服务器返回的Json数据，并将解析出的数据存储到本的
-    * */
+    /**
+     * 解析服务器返回的Json数据，并将解析出的数据存储到本地
+     * @param context 上下文
+     * @param response 服务器返回的Json数据
+     */
     public static void handleWeatherResponse(Context context, String response) {
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -121,9 +134,16 @@ public class Utility {
         }
     }
 
-    /*
-    * 将服务器返回的所有天气信息存储到SharedPreferences文件中
-    * */
+    /**
+     * 将服务器返回的所有天气信息存储到SharedPreferences文件中
+     * @param context 上下文
+     * @param cityName 城市名
+     * @param weatherCode 用于获取天气信息的天气码
+     * @param temp1 最高温度
+     * @param temp2 最低温度
+     * @param weatherDesp 天气状况
+     * @param publishTime 发布时间
+     */
     public static void saveWeatherInfo(Context context, String cityName, String weatherCode, String temp1,
                                        String temp2, String weatherDesp, String publishTime) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
@@ -141,7 +161,6 @@ public class Utility {
 
     /**
      * 把已选择的城市存到本地
-     *
      * @param context 上下文
      * @param list    已选择的城市
      */
@@ -154,7 +173,6 @@ public class Utility {
 
     /**
      * 读取存到本地的已选择的城市
-     *
      * @param context 上下文
      * @return 已选择的城市
      */
@@ -214,13 +232,12 @@ public class Utility {
                 PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
                 context).setSmallIcon(weatherImgRes);
-        mBuilder.setAutoCancel(true);
-        mBuilder.setContentIntent(pendingIntent);
-        mBuilder.setContent(contentViews);
-        mBuilder.setAutoCancel(true);
+        mBuilder.setAutoCancel(true);//设置自动关闭notification
+        mBuilder.setContentIntent(pendingIntent);//设置延时意图
+        mBuilder.setContent(contentViews);//设置内容视图
         Notification notification = mBuilder.build();
         notification.flags = Notification.FLAG_ONGOING_EVENT;
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(10, notification);
+        mNotificationManager.notify(10, notification);//10表示之后控制这个notification的id
     }
 }

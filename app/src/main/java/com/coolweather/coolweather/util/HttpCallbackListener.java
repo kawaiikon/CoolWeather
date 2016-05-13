@@ -5,7 +5,9 @@ package com.coolweather.coolweather.util;
  */
 public interface HttpCallbackListener {
 
+    //成功的回调方法
     void onFinish(String response);
 
+    //失败的回调方法
     void onError(Exception e);
 }

@@ -12,10 +12,17 @@ public class MyActivityManager {
 
     private static List<Activity> mList = new ArrayList<>();
 
+    /**
+     * 把打开的activity存到管理列表中
+     * @param activity 打开的activity
+     */
     public static void addActivity(Activity activity){
         mList.add(activity);
     }
 
+    /**
+     * 关闭所有打卡的activity
+     */
     public static void finishAllActivity(){
         for (Activity activity : mList){
             activity.finish();

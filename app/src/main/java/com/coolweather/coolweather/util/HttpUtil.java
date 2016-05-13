@@ -1,12 +1,9 @@
 package com.coolweather.coolweather.util;
 
-import android.content.Intent;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 
 /**
@@ -14,6 +11,11 @@ import java.net.URL;
  */
 public class HttpUtil {
 
+    /**
+     * 请求网络获取返回结果
+     * @param address 请求地址
+     * @param listener 网络请求回调接口
+     */
     public static void sendHttpRequest(final String address,
                                        final HttpCallbackListener listener){
         new Thread(new Runnable() {
@@ -23,9 +25,11 @@ public class HttpUtil {
                 try {
                     URL url = new URL(address);
                     connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
+                    connection.setRequestMethod("GET");//使用get请求
+                    //最多请求8秒
                     connection.setConnectTimeout(8000);
                     connection.setReadTimeout(8000);
+                    //读取返回的字符串
                     InputStream in = connection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                     StringBuilder response = new StringBuilder();
