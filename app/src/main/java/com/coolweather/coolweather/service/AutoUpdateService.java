@@ -33,6 +33,7 @@ public class AutoUpdateService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        LogUtil.e(TAG, "onStartCommand");
         if (!intent.getBooleanExtra("is_first", true)) {
             new Thread(new Runnable() {
                 @Override
@@ -47,7 +48,7 @@ public class AutoUpdateService extends Service {
         Intent i = new Intent(getApplicationContext(), AutoUpdateReceiver.class);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi);
-        return super.onStartCommand(intent, flags, startId);
+        return START_REDELIVER_INTENT;
     }
 
     /**
@@ -55,7 +56,7 @@ public class AutoUpdateService extends Service {
      */
     private void updateWeather() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String weatherCode = preferences.getString("weather_code", "");
+        String weatherCode = preferences.getString("weather_code_1", "");
         LogUtil.e(TAG, "weatherCode =" + weatherCode);
         String address = Prams.QUERY_WEATHER + weatherCode + Prams.HTML;
         LogUtil.url(address);

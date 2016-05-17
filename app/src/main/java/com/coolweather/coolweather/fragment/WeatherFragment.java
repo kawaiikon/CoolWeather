@@ -206,7 +206,6 @@ public class WeatherFragment extends Fragment {
     * */
     private void queryWeatherInfo(String weatherCode) {
         String address = Prams.QUERY_WEATHER + weatherCode + Prams.HTML;
-//        String address = "http://api.weatherdt.com/common/?area=101010100&type=forecast[1h_2d{001,002,003,004}]&key=f2d4cfcd6e6a0267f7772524fa193f1b";
         queryFromServer(address, "weatherCode");
 
     }
@@ -227,6 +226,13 @@ public class WeatherFragment extends Fragment {
                         if (array.length == 2) {
                             String weatherCode = array[1];
                             queryWeatherInfo(weatherCode);
+                            //存储通知栏所需的weatherCode
+                            if (mPage == 0) {
+                                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putString("weather_code_1", weatherCode);
+                                editor.commit();
+                            }
                         }
                     }
                 } else if ("weatherCode".equals(type)) {
@@ -282,9 +288,10 @@ public class WeatherFragment extends Fragment {
             weatherImgRes = R.drawable.xue;
         }
         weatherImg.setImageResource(weatherImgRes);
-        Intent intent = new Intent(getActivity(), AutoUpdateService.class);
-        getActivity().startService(intent);
-
+        if (mPage == 0) {
+            Intent intent = new Intent(getActivity(), AutoUpdateService.class);
+            getActivity().startService(intent);
+        }
         //把当前温度发布时间存到本地
         List<AddedCity> list = Utility.loadAddedCity(getActivity());
         for (AddedCity addedCity : list){

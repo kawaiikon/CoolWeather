@@ -243,7 +243,6 @@ public class ChooseAreaActivity extends Activity {
     /*
     * 显示进度对话框
     * */
-    //
     private void showProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);

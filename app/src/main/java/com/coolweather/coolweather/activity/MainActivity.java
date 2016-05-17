@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onRestart() {
         super.onRestart();
-        init();
+//        init();
     }
 
     private void init() {
