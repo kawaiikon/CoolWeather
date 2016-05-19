@@ -194,8 +194,6 @@ public class Utility {
      * @return true 时间差大于30秒
      */
     public static Boolean compare(Calendar calendar1, Calendar calendar2){
-        LogUtil.e("calender1", "" + calendar1.getTimeInMillis());
-        LogUtil.e("calender2", "" + calendar2.getTimeInMillis());
         if (calendar1.getTimeInMillis() - calendar2.getTimeInMillis() >= 30000 ||
                 calendar1.getTimeInMillis() - calendar2.getTimeInMillis() <= -30000){
             return true;
@@ -225,13 +223,11 @@ public class Utility {
         contentViews.setTextViewText(R.id.weather_text, weather);
         contentViews.setTextViewText(R.id.city_text, city);
         contentViews.setTextViewText(R.id.send_time_text, sendTime);
-        Intent intent = new Intent(context,
-                MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                context, 0, intent,
+        Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-                context).setSmallIcon(weatherImgRes);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context).
+                setSmallIcon(weatherImgRes);
         mBuilder.setAutoCancel(true);//设置自动关闭notification
         mBuilder.setContentIntent(pendingIntent);//设置延时意图
         mBuilder.setContent(contentViews);//设置内容视图
